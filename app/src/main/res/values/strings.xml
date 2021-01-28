@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Australia Radio</string>
+
+    <string name="app_id">ca-app-pub-8373695477540751~1234113554</string>
+    <string name="banner_ad">ca-app-pub-8373695477540751/4307107251</string>
+    <string name="intrestial_ad">ca-app-pub-8373695477540751/8847335102</string>
+    <string name="native_ad">ca-app-pub-8373695477540751/3595008421</string>
+
+    <string name="stream_offline">Radio station is offline. Please try again later.</string>
+    <string name="ad">Ad</string>
+    <string name="radio_name">Radio name</string>
+    <string name="radio">Radio</string>
+    <string name="rate_us">Rate us</string>
+    <string name="invite_friends">Invite Friends</string>
+    <string name="about_developer">About Developer</string>
+    <string name="send_feedback_amp_problems"><![CDATA[Send Feedback & Problems]]></string>
+    <string name="disclaimer">Disclaimer</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="radio_timer">Radio Timer</string>
+    <string name="_10_min">10 Min</string>
+    <string name="_25_min">25 Min</string>
+    <string name="_40_min">40 Min</string>
+    <string name="_60_min">60 Min</string>
+    <string name="share">Share</string>
+
+    <string name="nepali_radio">Radio Name</string>
+    <string name="recently_played">Recently Played</string>
+    <string name="search">Search</string>
+    <string name="add_new_radio">Add New Radio</string>
+
+    <string name="app_disclaimer">This app is made for those who like to listen online radios,
+
+        To make a good application we should give extra effort to make all services accurate and valid, application may contain inaccuracies. By using this app,
+        you agree that this app assumes no liability for any harm caused by use of this application.
+
+        Radio is a streaming client and dosen\'t stream/host any content by itself. Images/Logo are copyright of their respective owners.
+        If you want to add/update/remove your radio station, Please inform us(cherrydigital.care@gmail.com).
+
+        To add new station, Please contact us, Go to developer page on this app. Thank you.
+    </string>
+</resources>

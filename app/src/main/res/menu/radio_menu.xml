@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/radio_Search"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="100"
+        android:title="@string/search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/radio_timer"
+        android:icon="@drawable/ic_timer"
+        android:orderInCategory="300"
+        android:title="@string/radio_timer"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/more_rate"
+        android:orderInCategory="300"
+        android:title="@string/rate_us"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/more_invite"
+        android:orderInCategory="500"
+        android:title="@string/invite_friends"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/add_new"
+        android:orderInCategory="500"
+        android:title="@string/add_new_radio"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/more_disclaimer"
+        android:orderInCategory="700"
+        android:title="@string/disclaimer"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/more_privacy"
+        android:orderInCategory="800"
+        android:title="@string/privacy_policy"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/more_send"
+        android:orderInCategory="900"
+        android:title="@string/send_feedback_amp_problems"
+        app:showAsAction="never" />
+
+</menu>

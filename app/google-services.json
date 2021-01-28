@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "656459307014",
+    "firebase_url": "https://online--radio.firebaseio.com",
+    "project_id": "online--radio",
+    "storage_bucket": "online--radio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656459307014:android:ff422ccb494c6b501bcb87",
+        "android_client_info": {
+          "package_name": "com.newstoday.nepalnews.nepaliradio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "656459307014-enus02u16bcma37aai44gamm8p79ve2r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.newstoday.nepalnews.nepaliradio",
+            "certificate_hash": "4ced7849047108949ba8ecc4432e975a4086d86f"
+          }
+        },
+        {
+          "client_id": "656459307014-nqtt6itsqomkt73pjqi41qp1ucii985n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiR_1ACEiogayCBrN2hzlH_XqifUcGxiI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "656459307014-nqtt6itsqomkt73pjqi41qp1ucii985n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
