@@ -17,30 +17,28 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.formats.NativeAdOptions;
-import com.google.android.gms.ads.formats.UnifiedNativeAd;
-import com.google.android.gms.ads.formats.UnifiedNativeAdView;
-import com.radiostations.R;
+import com.google.android.gms.ads.nativead.NativeAd;
+import com.google.android.gms.ads.nativead.NativeAdOptions;
+import com.google.android.gms.ads.nativead.NativeAdView;
 import com.radiostations.All_Radio_Fragment;
 import com.radiostations.Next_Prev_Callback;
-import com.radiostations.Radio_Detail_Fragement;
+import com.radiostations.R;
 import com.radiostations.radio_recent.Recent_Radio_Adapter;
 import com.radiostations.radio_recent.Recent_Radio_Items;
 import com.radiostations.radioplayer_service.PlaybackStatus;
 import com.radiostations.radioplayer_service.RadioManager;
 import com.radiostations.radioplayer_service.RadioService;
-import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -98,7 +96,7 @@ public class Fav_Detail_Fragement extends Fragment {
                     }
                 });
 
-        Glide.with(getActivity())
+        Glide.with(Objects.requireNonNull(getActivity()))
                 .load(this.radioItems.stationimage)
                 .into(this.radioImage);
 
@@ -110,12 +108,10 @@ public class Fav_Detail_Fragement extends Fragment {
             favoriteList.setStationLink(radioItems.stationLink);
             favoriteList.setStationLocation(radioItems.stationLocation);
 
-            if (All_Radio_Fragment.recentDatabase.favoriteDao().isFavorite(radioItems.stationName) != 1) {
-                All_Radio_Fragment.recentDatabase.favoriteDao().addData(favoriteList);
-            } else {
+            if (All_Radio_Fragment.recentDatabase.favoriteDao().isFavorite(radioItems.stationName) == 1) {
                 All_Radio_Fragment.recentDatabase.favoriteDao().delete(favoriteList);
-                All_Radio_Fragment.recentDatabase.favoriteDao().addData(favoriteList);
             }
+            All_Radio_Fragment.recentDatabase.favoriteDao().addData(favoriteList);
 
             if (RadioManager.getService().isPlaying()) {
                 if (RadioService.current_Url != null) {
@@ -200,36 +196,40 @@ public class Fav_Detail_Fragement extends Fragment {
         if (getActivity() instanceof Next_Prev_Callback)
             callback = (Next_Prev_Callback) getActivity();
 
-        AdLoader adLoader = new AdLoader.Builder(Objects.requireNonNull(getActivity()), getActivity().getString(R.string.native_ad))
-                .forUnifiedNativeAd(unifiedNativeAd -> {
-                    FrameLayout frameLayout =
-                            v.findViewById(R.id.adFrame);
-                    try {
-                        UnifiedNativeAdView adView = (UnifiedNativeAdView) getLayoutInflater()
-                                .inflate(R.layout.aa_radio_native, null);
-                        populateUnifiedNativeAdView(unifiedNativeAd, adView);
-                        frameLayout.removeAllViews();
-                        frameLayout.addView(adView);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                })
-                .withAdListener(new AdListener() {
-                    @Override
-                    public void onAdFailedToLoad(LoadAdError loadAdError) {
-                        super.onAdFailedToLoad(loadAdError);
-                        adBackground.setVisibility(View.GONE);
-                    }
-                })
-                .withNativeAdOptions(new NativeAdOptions.Builder()
-                        .build())
-                .build();
-        adLoader.loadAd(new AdRequest.Builder().build());
+        try {
+            AdLoader adLoader = new AdLoader.Builder(Objects.requireNonNull(getActivity()), getActivity().getString(R.string.native_ad))
+                    .forNativeAd(unifiedNativeAd -> {
+                        FrameLayout frameLayout =
+                                v.findViewById(R.id.adFrame);
+                        try {
+                            NativeAdView adView = (NativeAdView) getLayoutInflater()
+                                    .inflate(R.layout.aa_radio_native, null);
+                            showNativeAdView(unifiedNativeAd, adView);
+                            frameLayout.removeAllViews();
+                            frameLayout.addView(adView);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    })
+                    .withAdListener(new AdListener() {
+                        @Override
+                        public void onAdFailedToLoad(LoadAdError loadAdError) {
+                            super.onAdFailedToLoad(loadAdError);
+                            adBackground.setVisibility(View.GONE);
+                        }
+                    })
+                    .withNativeAdOptions(new NativeAdOptions.Builder()
+                            .build())
+                    .build();
+            adLoader.loadAd(new AdRequest.Builder().build());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         setRadioView();
         return v;
     }
 
-    private void populateUnifiedNativeAdView(UnifiedNativeAd nativeAd, UnifiedNativeAdView adView) {
+    private void showNativeAdView(NativeAd nativeAd, NativeAdView adView) {
         adBackground.setVisibility(View.GONE);
         adView.setMediaView(adView.findViewById(R.id.native_ad_media_view));
         adView.setHeadlineView(adView.findViewById(R.id.native_ad_headline));

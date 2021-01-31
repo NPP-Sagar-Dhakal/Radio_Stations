@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/ten_minutes"
+        android:orderInCategory="100"
+        android:title="@string/_10_min"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/twentyfive_minutes"
+        android:orderInCategory="200"
+        android:title="@string/_25_min"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/fourty_minutes"
+        android:orderInCategory="300"
+        android:title="@string/_40_min"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/sixty_minutes"
+        android:orderInCategory="400"
+        android:title="@string/_60_min"
+        app:showAsAction="never" />
+
+</menu>

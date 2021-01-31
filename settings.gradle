@@ -1,2 +1,3 @@
+include ':RadioLibrary'
 include ':app'
 rootProject.name = "Radio Stations"

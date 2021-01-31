@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class NepalNewsItem {
+public class RadioItems {
 
     @SerializedName("NepalNews")
     public List<NepalNews> NepalNews;

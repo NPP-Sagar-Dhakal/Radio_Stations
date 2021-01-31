@@ -22,23 +22,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.formats.NativeAdOptions;
-import com.google.android.gms.ads.formats.UnifiedNativeAd;
-import com.google.android.gms.ads.formats.UnifiedNativeAdView;
-import com.radiostations.R;
+import com.google.android.gms.ads.nativead.NativeAd;
+import com.google.android.gms.ads.nativead.NativeAdOptions;
+import com.google.android.gms.ads.nativead.NativeAdView;
 import com.radiostations.All_Radio_Fragment;
 import com.radiostations.Next_Prev_Callback;
+import com.radiostations.R;
 import com.radiostations.radio_favorites.Favorites_Radio_Items;
 import com.radiostations.radioplayer_service.PlaybackStatus;
 import com.radiostations.radioplayer_service.RadioManager;
 import com.radiostations.radioplayer_service.RadioService;
-import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -95,7 +95,7 @@ public class Recent_Detail_Fragement extends Fragment {
                     }
                 });
 
-        Glide.with(getActivity())
+        Glide.with(Objects.requireNonNull(getActivity()))
                 .load(this.radioItems.stationimage)
                 .into(this.radioImage);
 
@@ -107,12 +107,10 @@ public class Recent_Detail_Fragement extends Fragment {
             favoriteList.setStationLink(radioItems.stationLink);
             favoriteList.setStationLocation(radioItems.stationLocation);
 
-            if (All_Radio_Fragment.recentDatabase.favoriteDao().isFavorite(radioItems.stationName) != 1) {
-                All_Radio_Fragment.recentDatabase.favoriteDao().addData(favoriteList);
-            } else {
+            if (All_Radio_Fragment.recentDatabase.favoriteDao().isFavorite(radioItems.stationName) == 1) {
                 All_Radio_Fragment.recentDatabase.favoriteDao().delete(favoriteList);
-                All_Radio_Fragment.recentDatabase.favoriteDao().addData(favoriteList);
             }
+            All_Radio_Fragment.recentDatabase.favoriteDao().addData(favoriteList);
 
             if (RadioManager.getService().isPlaying()) {
                 if (RadioService.current_Url != null) {
@@ -203,13 +201,13 @@ public class Recent_Detail_Fragement extends Fragment {
 
         try {
             AdLoader adLoader = new AdLoader.Builder(Objects.requireNonNull(getActivity()), getActivity().getString(R.string.native_ad))
-                    .forUnifiedNativeAd(unifiedNativeAd -> {
+                    .forNativeAd(unifiedNativeAd -> {
                         FrameLayout frameLayout =
                                 v.findViewById(R.id.adFrame);
                         try {
-                            UnifiedNativeAdView adView = (UnifiedNativeAdView) getLayoutInflater()
+                            NativeAdView adView = (NativeAdView) getLayoutInflater()
                                     .inflate(R.layout.aa_radio_native, null);
-                            populateUnifiedNativeAdView(unifiedNativeAd, adView);
+                            showNativeAdView(unifiedNativeAd, adView);
                             frameLayout.removeAllViews();
                             frameLayout.addView(adView);
                         } catch (Exception e) {
@@ -226,7 +224,6 @@ public class Recent_Detail_Fragement extends Fragment {
                     .withNativeAdOptions(new NativeAdOptions.Builder()
                             .build())
                     .build();
-
             adLoader.loadAd(new AdRequest.Builder().build());
         } catch (Exception e) {
             e.printStackTrace();
@@ -235,7 +232,7 @@ public class Recent_Detail_Fragement extends Fragment {
         return v;
     }
 
-    private void populateUnifiedNativeAdView(UnifiedNativeAd nativeAd, UnifiedNativeAdView adView) {
+    private void showNativeAdView(NativeAd nativeAd, NativeAdView adView) {
         adBackground.setVisibility(View.GONE);
         adView.setMediaView(adView.findViewById(R.id.native_ad_media_view));
         adView.setHeadlineView(adView.findViewById(R.id.native_ad_headline));
@@ -256,7 +253,6 @@ public class Recent_Detail_Fragement extends Fragment {
             ((Button) adView.getCallToActionView()).setText(nativeAd.getCallToAction());
         }
 
-
         if (nativeAd.getHeadline() == null) {
             adView.getHeadlineView().setVisibility(View.INVISIBLE);
         } else {
@@ -264,8 +260,8 @@ public class Recent_Detail_Fragement extends Fragment {
             adView.getHeadlineView().setVisibility(View.VISIBLE);
         }
         adView.setNativeAd(nativeAd);
-    }
 
+    }
 
     @Override
     public void onStart() {
